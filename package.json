@@ -18,10 +18,14 @@
     "src/**/*"
   ],
   "scripts": {
+    "start": "ts-node src/index.ts",
     "dev": "unbuild --stub",
     "build": "unbuild",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "puppeteer": "^21.6.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.4.6",
