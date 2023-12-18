@@ -1,0 +1,47 @@
+{
+  "name": "tiny-app-cli",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@8+",
+  "description": "自动提审与发布微信、支付宝小程序",
+  "author": "penghongkun <https://github.com/phk422>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phk422/tiny-app-cli"
+  },
+  "keywords": [],
+  "bin": {
+    "tiny-app-cli": "index.js"
+  },
+  "files": [
+    "src/**/*"
+  ],
+  "scripts": {
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.4.6",
+    "@types/minimist": "^1.2.5",
+    "@types/prompts": "^2.4.9",
+    "eslint": "^8.56.0",
+    "kolorist": "^1.8.0",
+    "lint-staged": "^15.2.0",
+    "prompts": "^2.4.2",
+    "simple-git-hooks": "^2.9.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "unbuild": "^2.0.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,md}": [
+      "eslint --cache --fix"
+    ]
+  }
+}
