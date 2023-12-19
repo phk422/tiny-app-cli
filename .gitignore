@@ -3,3 +3,5 @@ dist
 package-lock.json
 
 src/cache/*.png
+
+.eslintcache
