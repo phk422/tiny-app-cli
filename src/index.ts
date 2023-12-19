@@ -1,7 +1,7 @@
 import { bgGreen, red, reset } from 'kolorist'
 import prompts from 'prompts'
 import { ACTION, PLATFORM } from './constants'
-import { getLoginScanCode } from './weixin'
+import weixinRobot from './weixin'
 
 async function main() {
   const result: prompts.Answers<
@@ -38,7 +38,7 @@ async function main() {
 
   console.log(result)
   if (result.platform === PLATFORM.WEIXIN)
-    await getLoginScanCode()
+    await weixinRobot()
   else
     console.log(bgGreen('正在开发中...'))
 }

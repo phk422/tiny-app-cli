@@ -1,15 +1,19 @@
 import { green } from 'kolorist'
+import type { Browser, Page } from 'puppeteer'
 import puppeteer from 'puppeteer'
 import { WEIXIN_URL } from '../constants'
 import { pathResolve, showQrCodeToTerminal } from '../utils'
+
+let browser: Browser
+let page: Page
 
 /**
  * 获取微信图片二维码
  */
 export async function getLoginScanCode() {
   console.log(green('正在获取登录二维码...'))
-  const browser = await puppeteer.launch({ headless: false })
-  const page = await browser.newPage()
+  browser = await puppeteer.launch({ headless: false })
+  page = await browser.newPage()
   await page.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1.5 })
   await page.goto(WEIXIN_URL)
   const imgSelector = '.login__type__container__scan__qrcode'
@@ -31,4 +35,22 @@ export async function getLoginScanCode() {
   const scanCode = await showQrCodeToTerminal(loginCodeImagePath)
   console.log(green('☛ 请使用微信扫描二维码登录'))
   console.log(scanCode)
+}
+
+export async function jumpeToVersions() {
+  const versionManage = await page.waitForSelector('.menu_item .tab-bar__wrap.tab-bar__wrap--submenu')
+  console.log(green('登录成功'))
+  if (!versionManage)
+    throw new Error('未找到版本管理')
+  console.log(green('正在跳转到版本管理页面...'))
+  void versionManage.click()
+  const subimitReviewBtn = await page.waitForSelector('.mod_default_box.code_version_dev .weui-desktop-btn.weui-desktop-btn_primary')
+  if (!subimitReviewBtn)
+    throw new Error('未找到提交审核按钮')
+  void subimitReviewBtn.click()
+}
+
+export default async function weixinRobot() {
+  await getLoginScanCode()
+  await jumpeToVersions()
 }
