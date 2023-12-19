@@ -10,7 +10,16 @@
     "type": "git",
     "url": "git+https://github.com/phk422/tiny-app-cli"
   },
-  "keywords": [],
+  "keywords": [
+    "alipay",
+    "miniprogram",
+    "wechat",
+    "uniapp",
+    "tiny-app",
+    "小程序自动提审",
+    "自动发布",
+    "自动上传"
+  ],
   "bin": {
     "tiny-app-cli": "index.js"
   },
