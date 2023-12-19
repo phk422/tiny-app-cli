@@ -3,6 +3,9 @@ import puppeteer from 'puppeteer'
 import { WEIXIN_URL } from '../constants'
 import { pathResolve, showQrCodeToTerminal } from '../utils'
 
+/**
+ * 获取微信图片二维码
+ */
 export async function getLoginScanCode() {
   console.log(green('正在获取登录二维码...'))
   const browser = await puppeteer.launch({ headless: false })
@@ -26,6 +29,6 @@ export async function getLoginScanCode() {
   const loginCodeImagePath = pathResolve('../template/login-qr.png')
   await loginCode?.screenshot({ path: loginCodeImagePath, type: 'png' })
   const scanCode = await showQrCodeToTerminal(loginCodeImagePath)
-  // 打印二维码
+  console.log(green('☛ 请使用微信扫描二维码登录'))
   console.log(scanCode)
 }
