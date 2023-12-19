@@ -30,7 +30,7 @@ export async function getLoginScanCode() {
       }
     })
   })
-  const loginCodeImagePath = pathResolve('../template/login-qr.png')
+  const loginCodeImagePath = pathResolve('../cache/login-qr.png')
   await loginCode?.screenshot({ path: loginCodeImagePath, type: 'png' })
   const scanCode = await showQrCodeToTerminal(loginCodeImagePath)
   console.log(green('☛ 请使用微信扫描二维码登录'))
