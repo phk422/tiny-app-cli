@@ -7,7 +7,7 @@ export async function getLoginScanCode() {
   console.log(green('正在获取登录二维码...'))
   const browser = await puppeteer.launch({ headless: false })
   const page = await browser.newPage()
-  await page.setViewport({ width: 1920, height: 1080 })
+  await page.setViewport({ width: 1080, height: 1920, deviceScaleFactor: 1.5 })
   await page.goto(WEIXIN_URL)
   const imgSelector = '.login__type__container__scan__qrcode'
   const loginCode = await page.waitForSelector(imgSelector)

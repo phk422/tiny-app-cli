@@ -19,17 +19,11 @@ export function pathResolve(...paths: string[]) {
  */
 export async function showQrCodeToTerminal(targetPath: string) {
   return new Promise((resolve, reject) => {
-    console.log(targetPath)
-    console.log(fs.readFileSync(targetPath))
-    // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-call, ts/no-unsafe-member-access
     const data = UPNG.decode(fs.readFileSync(targetPath))
-    console.log(data)
-    // eslint-disable-next-line ts/no-unsafe-argument, ts/no-unsafe-call, ts/no-unsafe-member-access
     const code = jsqr(new Uint8ClampedArray(UPNG.toRGBA8(data)[0]), data.width, data.height)
     if (code) {
       qrcodeTerminal.generate(code.data, { small: true }, (qrcode) => {
         resolve(qrcode)
-        console.log(qrcode)
       })
     }
     else {
