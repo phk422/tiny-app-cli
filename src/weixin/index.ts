@@ -1,14 +1,31 @@
-import path from 'node:path'
 import { green } from 'kolorist'
 import puppeteer from 'puppeteer'
 import { WEIXIN_URL } from '../constants'
+import { pathResolve, showQrCodeToTerminal } from '../utils'
 
 export async function getLoginScanCode() {
   console.log(green('正在获取登录二维码...'))
   const browser = await puppeteer.launch({ headless: false })
   const page = await browser.newPage()
+  await page.setViewport({ width: 1920, height: 1080 })
   await page.goto(WEIXIN_URL)
-  const loginCode = await page.waitForSelector('.login__type__container__scan__qrcode')
-  const loginCodeImagePath = path.resolve(__dirname, '../template/login.png')
-  await loginCode?.screenshot({ path: loginCodeImagePath })
+  const imgSelector = '.login__type__container__scan__qrcode'
+  const loginCode = await page.waitForSelector(imgSelector)
+  await page.evaluate(() => {
+    return new Promise((resolve, reject) => {
+      const el = document.querySelector<HTMLImageElement>('.login__type__container__scan__qrcode')
+      if (el) {
+        el.onload = resolve
+        el.onerror = reject
+      }
+      else {
+        reject(new Error('登录失败'))
+      }
+    })
+  })
+  const loginCodeImagePath = pathResolve('../template/login-qr.png')
+  await loginCode?.screenshot({ path: loginCodeImagePath, type: 'png' })
+  const scanCode = await showQrCodeToTerminal(loginCodeImagePath)
+  // 打印二维码
+  console.log(scanCode)
 }

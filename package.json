@@ -27,19 +27,23 @@
     "src/**/*"
   ],
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "pnpm dev && pnpm tiny-app-cli",
     "dev": "unbuild --stub",
     "build": "unbuild",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "puppeteer": "^21.6.1"
+    "@pdf-lib/upng": "^1.0.1",
+    "jsqr": "^1.4.0",
+    "puppeteer": "^21.6.1",
+    "qrcode-terminal": "^0.12.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.4.6",
     "@types/minimist": "^1.2.5",
     "@types/prompts": "^2.4.9",
+    "@types/qrcode-terminal": "^0.12.2",
     "eslint": "^8.56.0",
     "kolorist": "^1.8.0",
     "lint-staged": "^15.2.0",
