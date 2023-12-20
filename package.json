@@ -36,6 +36,8 @@
   "dependencies": {
     "@pdf-lib/upng": "^1.0.1",
     "jsqr": "^1.4.0",
+    "kolorist": "^1.8.0",
+    "prompts": "^2.4.2",
     "puppeteer": "^21.6.1",
     "qrcode-terminal": "^0.12.0"
   },
@@ -45,9 +47,7 @@
     "@types/prompts": "^2.4.9",
     "@types/qrcode-terminal": "^0.12.2",
     "eslint": "^8.56.0",
-    "kolorist": "^1.8.0",
     "lint-staged": "^15.2.0",
-    "prompts": "^2.4.2",
     "simple-git-hooks": "^2.9.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
