@@ -30,7 +30,7 @@
     "start": "pnpm dev && pnpm tiny-app-cli",
     "dev": "unbuild --stub",
     "build": "unbuild",
-    "publish": "npm publish --access public",
+    "publish:ci": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
