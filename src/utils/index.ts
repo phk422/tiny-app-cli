@@ -38,7 +38,7 @@ export async function showQrCodeToTerminal(targetPath: string) {
  * @param {number} ms - 要等待的时间，以毫秒为单位
  * @returns {Promise} - 等待指定时间后返回的Promise对象
  */
-export function sleep(ms: number) {
+export function sleep(ms: number = 500) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms)
   })
