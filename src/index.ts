@@ -36,7 +36,6 @@ async function main() {
   },
 )
 
-  console.log(result)
   if (result.platform === PLATFORM.WEIXIN)
     await weixinRobot()
   else
