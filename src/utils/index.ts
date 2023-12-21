@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import qrcodeTerminal from 'qrcode-terminal'
 import jsqr from 'jsqr'
-import UPNG from '@pdf-lib/upng'
+import UPNG from 'upng-js'
 
 export const __dirname = path.dirname(fileURLToPath(import.meta.url))
 

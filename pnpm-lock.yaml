@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@pdf-lib/upng':
-    specifier: ^1.0.1
-    version: 1.0.1
   jsqr:
     specifier: ^1.4.0
     version: 1.4.0
@@ -23,6 +20,9 @@ dependencies:
   qrcode-terminal:
     specifier: ^0.12.0
     version: 0.12.0
+  upng-js:
+    specifier: ^2.1.0
+    version: 2.1.0
 
 devDependencies:
   '@antfu/eslint-config':
@@ -37,6 +37,9 @@ devDependencies:
   '@types/qrcode-terminal':
     specifier: ^0.12.2
     version: 0.12.2
+  '@types/upng-js':
+    specifier: ^2.1.5
+    version: 2.1.5
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
@@ -688,12 +691,6 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@pdf-lib/upng@1.0.1:
-    resolution: {integrity: sha512-dQK2FUMQtowVP00mtIksrlZhdFXQZPC+taih1q4CvPZ5vqdxR/LKBaFg0oAfzd1GlHZXXSPdQfzQnt+ViGvEIQ==}
-    dependencies:
-      pako: 1.0.11
-    dev: false
-
   /@puppeteer/browsers@1.9.0:
     resolution: {integrity: sha512-QwguOLy44YBGC8vuPP2nmpX4MUN2FzWbsnvZJtiCzecU3lHmVZkaC1tq6rToi9a200m8RzlVtDyxCS0UIDrxUg==}
     engines: {node: '>=16.3.0'}
@@ -940,6 +937,10 @@ packages:
 
   /@types/unist@2.0.10:
     resolution: {integrity: sha512-IfYcSBWE3hLpBg8+X2SEa8LVkJdJEkT2Ese2aaLs3ptGdVtABxndrMaxuFlQ1qdFf9Q5rDvDpxI3WwgvKFAsQA==}
+    dev: true
+
+  /@types/upng-js@2.1.5:
+    resolution: {integrity: sha512-CzXg1lcCcWzrmYmke9BLbBPzb2DpdC1bXuXf0BtK3Bygvsozslei8S1bheDI1QUfZzZpMeQI5fywfnMj4CxocQ==}
     dev: true
 
   /@types/yauzl@2.10.3:
@@ -4313,6 +4314,12 @@ packages:
       escalade: 3.1.1
       picocolors: 1.0.0
     dev: true
+
+  /upng-js@2.1.0:
+    resolution: {integrity: sha512-d3xzZzpMP64YkjP5pr8gNyvBt7dLk/uGI67EctzDuVp4lCZyVMo0aJO6l/VDlgbInJYDY6cnClLoBp29eKWI6g==}
+    dependencies:
+      pako: 1.0.11
+    dev: false
 
   /uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
