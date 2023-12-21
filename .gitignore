@@ -2,6 +2,7 @@ node_modules
 dist
 package-lock.json
 
-src/cache/*.png
+cache/*.png
+login-qr.png
 
 .eslintcache
