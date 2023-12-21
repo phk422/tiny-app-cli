@@ -1,8 +1,11 @@
 import path from 'node:path'
 import fs from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import qrcodeTerminal from 'qrcode-terminal'
 import jsqr from 'jsqr'
 import UPNG from '@pdf-lib/upng'
+
+export const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /**
  * 将传入的路径组合起来形成一个完整的路径
