@@ -16,7 +16,7 @@ export async function getLoginScanCode() {
   page = await browser.newPage()
   await page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 1.5 })
   await page.goto(WEIXIN_URL)
-  const imgSelector = '.login__type__container__scan__qrcode'
+  const imgSelector = '.login_frame.input_login'
   const loginCode = await page.waitForSelector(imgSelector)
   await page.evaluate(() => {
     return new Promise((resolve, reject) => {
@@ -31,6 +31,7 @@ export async function getLoginScanCode() {
     })
   })
   const loginCodeImagePath = pathResolve('../cache/login-qr.png')
+  await sleep(1000)
   await loginCode?.screenshot({ path: loginCodeImagePath, type: 'png' })
   const scanCode = await showQrCodeToTerminal(loginCodeImagePath)
   console.log(green('☛ 请使用微信扫描二维码登录'))
