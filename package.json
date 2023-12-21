@@ -24,7 +24,8 @@
     "tiny-app-cli": "index.js"
   },
   "files": [
-    "src/**/*"
+    "dist",
+    "src/cache.json"
   ],
   "scripts": {
     "start": "pnpm dev && pnpm tiny-app-cli",
