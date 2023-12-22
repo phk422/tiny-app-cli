@@ -1,4 +1,4 @@
-import { bgGreen, red, reset } from 'kolorist'
+import { bgGreen, blue, green, red, reset } from 'kolorist'
 import prompts from 'prompts'
 import { ACTION, PLATFORM } from './constants'
 import weixinRobot from './weixin'
@@ -10,11 +10,11 @@ async function main() {
   [
     {
       type: 'select',
-      message: reset('请选择登录方式'),
+      message: reset('请选择发布平台'),
       name: 'platform',
       choices: [
-        { title: '微信', description: '登录微信公众平台', value: PLATFORM.WEIXIN },
-        { title: '支付宝', description: '登录支付宝公众平台', value: PLATFORM.ALIPAY },
+        { title: green('微信'), description: '登录微信公众平台', value: PLATFORM.WEIXIN },
+        { title: blue('支付宝'), description: '登录支付宝公众平台', value: PLATFORM.ALIPAY },
       ],
       initial: 0,
     },
@@ -23,8 +23,8 @@ async function main() {
       message: reset('您是提交审核还是发布？'),
       name: 'action',
       choices: [
-        { title: '提审', description: '', value: ACTION.REVIEW },
-        { title: '发布', description: '', value: ACTION.RELEASE },
+        { title: '提审', description: '提审微信小程序', value: ACTION.REVIEW },
+        { title: red('发布'), description: '提审支付宝小程序', value: ACTION.RELEASE },
       ],
       initial: 0,
     },
