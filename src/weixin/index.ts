@@ -42,7 +42,7 @@ export async function getLoginScanCode() {
  * 跳转到版本列表
  */
 export async function jumpToVersions() {
-  const versionManage = await page.waitForSelector('.menu_item .tab-bar__wrap.tab-bar__wrap--submenu')
+  const versionManage = await page.waitForSelector('.menu_item .tab-bar__wrap.tab-bar__wrap--submenu', { timeout: 0 })
   console.log(green('登录成功'))
   if (!versionManage)
     throw new Error('未找到版本管理')
@@ -86,7 +86,6 @@ export async function jumpToConfirmPage() {
   const pages = await browser.pages()
   let flag = false
   for (const item of pages) {
-    console.log(item.url())
     if (item.url().includes('wxamp/wadevelopcode/get_class')) {
       page = item
       flag = true

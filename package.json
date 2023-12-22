@@ -28,7 +28,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "pnpm dev && pnpm tiny-app-cli",
+    "start": "pnpm dev && node ./index.js",
     "dev": "unbuild --stub",
     "build": "unbuild",
     "publish:ci": "npm publish --access public",
@@ -52,7 +52,6 @@
     "eslint": "^8.56.0",
     "lint-staged": "^15.2.0",
     "simple-git-hooks": "^2.9.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0"
   },
