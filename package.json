@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "packageManager": "pnpm@8.6.12",
-  "description": "自动提审与发布微信、支付宝小程序",
+  "description": "自动提审与发布微信、支付宝小程序, 更好的实现小程序的CI/CD",
   "author": "penghongkun <https://github.com/phk422>",
   "license": "MIT",
   "repository": {
@@ -16,10 +16,12 @@
     "wechat",
     "uniapp",
     "tiny-app",
+    "CI/CD",
     "小程序自动提审",
     "自动发布",
     "自动上传"
   ],
+  "main": "index.js",
   "bin": {
     "tiny-app-cli": "index.js"
   },
