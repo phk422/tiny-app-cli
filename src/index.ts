@@ -23,8 +23,8 @@ async function main() {
       message: reset('您是提交审核还是发布？'),
       name: 'action',
       choices: [
-        { title: '提审', description: '提审微信小程序', value: ACTION.REVIEW },
-        { title: red('发布'), description: '提审支付宝小程序', value: ACTION.RELEASE },
+        { title: '提审', description: '提审小程序', value: ACTION.REVIEW },
+        { title: red('发布'), description: '发布小程序', value: ACTION.RELEASE },
       ],
       initial: 0,
     },
