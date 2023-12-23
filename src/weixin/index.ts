@@ -1,7 +1,7 @@
 import { bgLightGreen, green } from 'kolorist'
 import type { Browser, Page } from 'puppeteer'
 import puppeteer from 'puppeteer'
-import { WEIXIN_URL } from '../constants'
+import { ACTION, VIEWPORT, WEIXIN_URL } from '../constants'
 import { pathResolve, showQrCodeToTerminal, sleep } from '../utils'
 
 let browser: Browser
@@ -14,7 +14,7 @@ export async function getLoginScanCode() {
   console.log(green('正在获取登录二维码...'))
   browser = await puppeteer.launch({ headless: false })
   page = await browser.newPage()
-  await page.setViewport({ width: 1920, height: 1080, deviceScaleFactor: 1.5 })
+  await page.setViewport(VIEWPORT)
   await page.goto(WEIXIN_URL)
   const imgSelector = '.login_frame.input_login'
   const loginCode = await page.waitForSelector(imgSelector)
@@ -92,6 +92,7 @@ export async function jumpToConfirmPage() {
       break
     }
   }
+  void page.setViewport(VIEWPORT)
   if (!flag)
     throw new Error('获取提交审核页面失败')
 }
@@ -105,12 +106,31 @@ export async function toSubmitAudit() {
   if (!submitBtn)
     throw new Error('获取提交审核失败')
   await submitBtn.click()
-  console.log(bgLightGreen('提交审核成功！'))
+  await page.waitForSelector('.msg_icon_wrp .icon_msg.success')
+  const msg = await page.evaluate(() => {
+    return document.querySelector('.msg_content')?.innerHTML
+  })
+  if (msg?.includes('已提交审核'))
+    console.log(bgLightGreen('提交审核成功！'))
+  else
+    throw new Error('提交审核失败')
 }
 
-export default async function weixinRobot() {
+/**
+ * 去发布
+ */
+export async function toRelease() {
+  console.log('正在开发中...')
+}
+
+export default async function weixinRobot(action: ACTION) {
   await getLoginScanCode()
   await jumpToVersions()
-  await jumpToConfirmPage()
-  await toSubmitAudit()
+  if (action === ACTION.REVIEW) {
+    await jumpToConfirmPage()
+    await toSubmitAudit()
+  }
+  else {
+    await toRelease()
+  }
 }

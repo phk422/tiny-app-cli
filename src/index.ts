@@ -37,7 +37,7 @@ async function main() {
 )
 
   if (result.platform === PLATFORM.WEIXIN)
-    await weixinRobot()
+    await weixinRobot(result.action as ACTION)
   else
     console.log(bgGreen('正在开发中...'))
 }
