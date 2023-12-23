@@ -40,6 +40,7 @@
   "dependencies": {
     "jsqr": "^1.4.0",
     "kolorist": "^1.8.0",
+    "ora": "^8.0.1",
     "prompts": "^2.4.2",
     "puppeteer": "^21.6.1",
     "qrcode-terminal": "^0.12.0",

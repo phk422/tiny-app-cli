@@ -1,17 +1,21 @@
-import { bgLightGreen, green } from 'kolorist'
+import { yellow } from 'kolorist'
 import type { Browser, Page } from 'puppeteer'
 import puppeteer from 'puppeteer'
+import type { Ora } from 'ora'
+import ora from 'ora'
 import { ACTION, VIEWPORT, WEIXIN_URL } from '../constants'
 import { pathResolve, showQrCodeToTerminal, sleep } from '../utils'
 
 let browser: Browser
 let page: Page
 
+let spinner: Ora
+
 /**
  * 获取微信图片二维码
  */
 export async function getLoginScanCode() {
-  console.log(green('正在获取登录二维码...'))
+  spinner = ora('正在获取登录二维码...').start()
   browser = await puppeteer.launch({ headless: false })
   page = await browser.newPage()
   await page.setViewport(VIEWPORT)
@@ -34,23 +38,29 @@ export async function getLoginScanCode() {
   await sleep(1000)
   await loginCode?.screenshot({ path: loginCodeImagePath, type: 'png' })
   const scanCode = await showQrCodeToTerminal(loginCodeImagePath)
-  console.log(green('☛ 请使用微信扫描二维码登录'))
+  spinner.succeed(yellow('请使用微信扫描二维码登录微信公众平台'))
   console.log(scanCode)
+  await page.waitForSelector('.weui-desktop-icon.weui-desktop-icon__success.weui-desktop-icon__large', { timeout: 0 })
+  spinner.succeed('扫码成功')
 }
 
 /**
  * 跳转到版本列表
  */
 export async function jumpToVersions() {
+  spinner.start('正在跳转到版本管理页面...')
   const versionManage = await page.waitForSelector('.menu_item .tab-bar__wrap.tab-bar__wrap--submenu', { timeout: 0 })
-  console.log(green('登录成功'))
-  if (!versionManage)
+  if (!versionManage) {
+    spinner.fail('未找到版本管理')
     throw new Error('未找到版本管理')
-  console.log(green('正在跳转到版本管理页面...'))
+  }
+  spinner.start('正在跳转到版本管理页面...')
   await versionManage.click()
   const submitReviewBtn = await page.waitForSelector('.mod_default_box.code_version_dev .weui-desktop-btn.weui-desktop-btn_primary')
-  if (!submitReviewBtn)
+  if (!submitReviewBtn) {
+    spinner.fail('未找到提交审核按钮')
     throw new Error('未找到提交审核按钮')
+  }
   await submitReviewBtn.click()
   await sleep(1000)
 }
@@ -59,6 +69,7 @@ export async function jumpToVersions() {
  * 跳转确认提交审核界面
  */
 export async function jumpToConfirmPage() {
+  spinner.start('正在提交审核中...')
   const agreeCheckbox = await page.waitForSelector('.weui-desktop-icon-checkbox')
   const nextStepBtn = await page.waitForSelector('.code_submit_dialog .weui-desktop-btn.weui-desktop-btn_primary')
   if (!agreeCheckbox || !nextStepBtn)
@@ -111,7 +122,7 @@ export async function toSubmitAudit() {
     return document.querySelector('.msg_content')?.innerHTML
   })
   if (msg?.includes('已提交审核'))
-    console.log(bgLightGreen('提交审核成功！'))
+    spinner.succeed('提交审核成功')
   else
     throw new Error('提交审核失败')
 }
