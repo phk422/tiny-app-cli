@@ -30,7 +30,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "pnpm dev && node ./index.js",
+    "start": "pnpm dev && cross-env NODE_ENV=development node ./index.js",
     "dev": "unbuild --stub",
     "build": "unbuild",
     "publish:ci": "npm publish --access public",
@@ -52,6 +52,7 @@
     "@types/prompts": "^2.4.9",
     "@types/qrcode-terminal": "^0.12.2",
     "@types/upng-js": "^2.1.5",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "lint-staged": "^15.2.0",
     "simple-git-hooks": "^2.9.0",

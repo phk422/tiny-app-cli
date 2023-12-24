@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { yellow } from 'kolorist'
 import type { Browser, Page } from 'puppeteer'
 import puppeteer from 'puppeteer'
@@ -56,13 +57,20 @@ export async function jumpToVersions() {
   }
   spinner.start('正在跳转到版本管理页面...')
   await versionManage.click()
+
   const submitReviewBtn = await page.waitForSelector('.mod_default_box.code_version_dev .weui-desktop-btn.weui-desktop-btn_primary')
   if (!submitReviewBtn) {
     spinner.fail('未找到提交审核按钮')
     throw new Error('未找到提交审核按钮')
   }
+  // 判断是否有提交审核中的版本
+  const testVersion = await page.$('.mod_default_bd.default_box.test_version')
+  if (testVersion && !await testVersion.evaluate(el => el.textContent?.includes('你暂无提交审核的版本或者版本已发布上线'))) {
+    spinner.warn('存在提交审核中的版本')
+    throw new Error('存在提交审核中的版本')
+  }
   await submitReviewBtn.click()
-  await sleep(1000)
+  await sleep(1200) // 可能会报错
 }
 
 /**
@@ -135,13 +143,23 @@ export async function toRelease() {
 }
 
 export default async function weixinRobot(action: ACTION) {
-  await getLoginScanCode()
-  await jumpToVersions()
-  if (action === ACTION.REVIEW) {
-    await jumpToConfirmPage()
-    await toSubmitAudit()
+  try {
+    await getLoginScanCode()
+    await jumpToVersions()
+    if (action === ACTION.REVIEW) {
+      await jumpToConfirmPage()
+      await toSubmitAudit()
+    }
+    else {
+      await toRelease()
+    }
+    process.exit(0)
   }
-  else {
-    await toRelease()
+  catch (err) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error(err)
+      return
+    }
+    process.exit(1)
   }
 }
