@@ -1,7 +1,7 @@
 {
   "name": "tiny-app-cli",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "packageManager": "pnpm@8.6.12",
   "description": "自动提审与发布微信、支付宝小程序, 更好的实现小程序的CI/CD",
   "author": "penghongkun <https://github.com/phk422>",
@@ -31,6 +31,7 @@
   ],
   "scripts": {
     "start": "pnpm dev && cross-env NODE_ENV=development node ./index.js",
+    "start:pro": "pnpm dev && node ./index.js",
     "dev": "unbuild --stub",
     "build": "unbuild",
     "publish:ci": "npm publish --access public",
