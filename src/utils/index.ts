@@ -21,7 +21,7 @@ export function pathResolve(...paths: string[]) {
  * @param targetPath - 目标路径
  * @returns 返回一个Promise，resolve时为生成的QR码对象，reject时为Error对象
  */
-export async function showQrCodeToTerminal(targetPath: string) {
+export async function showQrCodeToTerminal(targetPath: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const data = UPNG.decode(fs.readFileSync(targetPath))
     const code = jsqr(new Uint8ClampedArray(UPNG.toRGBA8(data)[0]), data.width, data.height)

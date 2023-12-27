@@ -1,3 +1,4 @@
+import process from 'node:process'
 import type { Viewport } from 'puppeteer'
 
 export { description, version, name } from '../../package.json'
@@ -15,3 +16,5 @@ export enum ACTION {
 }
 
 export const VIEWPORT: Viewport = { width: 1920, height: 1080, deviceScaleFactor: 1.5 }
+
+export const __DEV__ = process.env.NODE_ENV === 'development'

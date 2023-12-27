@@ -30,8 +30,8 @@
     "dist"
   ],
   "scripts": {
-    "start": "pnpm dev && cross-env NODE_ENV=development node ./index.js",
-    "start:pro": "pnpm dev && node ./index.js",
+    "start": "cross-env NODE_ENV=development node ./index.js",
+    "start:pro": "pnpm build && node ./index.js",
     "dev": "unbuild --stub",
     "build": "unbuild",
     "publish:ci": "npm publish --access public",

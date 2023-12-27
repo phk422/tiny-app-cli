@@ -4,7 +4,7 @@ import type { Browser, Page } from 'puppeteer'
 import puppeteer from 'puppeteer'
 import type { Ora } from 'ora'
 import ora from 'ora'
-import { ACTION, VIEWPORT, WEIXIN_URL } from '../constants'
+import { ACTION, VIEWPORT, WEIXIN_URL, __DEV__ } from '../constants'
 import { pathResolve, showQrCodeToTerminal, sleep } from '../utils'
 
 let browser: Browser
@@ -27,8 +27,6 @@ export async function getLoginScanCode() {
     return new Promise<void>((resolve, reject) => {
       const el = document.querySelector<HTMLImageElement>('.login__type__container__scan__qrcode')
       if (el) {
-        if (el.complete)
-          return resolve()
         el.onload = () => resolve()
         el.onerror = reject
       }
@@ -38,9 +36,17 @@ export async function getLoginScanCode() {
     })
   })
   const loginCodeImagePath = pathResolve('../cache/login-qr.png')
-  await sleep(1000)
-  await loginCode?.screenshot({ path: loginCodeImagePath, type: 'png' })
-  const scanCode = await showQrCodeToTerminal(loginCodeImagePath)
+  const getScanCode = async (): Promise<string> => {
+    await loginCode?.screenshot({ path: loginCodeImagePath, type: 'png' })
+    try {
+      return await showQrCodeToTerminal(loginCodeImagePath)
+    }
+    catch (e) {
+      await sleep()
+      return getScanCode()
+    }
+  }
+  const scanCode = await getScanCode()
   spinner.succeed(yellow('请使用微信扫描二维码登录微信公众平台'))
   console.log(scanCode)
   await page.waitForSelector('.weui-desktop-icon.weui-desktop-icon__success.weui-desktop-icon__large', { timeout: 0 })
@@ -158,7 +164,8 @@ export default async function weixinRobot(action: ACTION) {
     process.exit(0)
   }
   catch (err) {
-    if (process.env.NODE_ENV === 'development') {
+    console.log(__DEV__)
+    if (__DEV__) {
       console.error(err)
       return
     }
