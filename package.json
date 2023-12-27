@@ -39,6 +39,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "commander": "^11.1.0",
     "jsqr": "^1.4.0",
     "kolorist": "^1.8.0",
     "ora": "^7.0.1",

@@ -1,47 +1,15 @@
-import { bgGreen, blue, green, red, reset } from 'kolorist'
-import prompts from 'prompts'
-import { ACTION, PLATFORM } from './constants'
-import weixinRobot from './weixin'
+import { Option, program } from 'commander'
+import { ACTION, PLATFORM, description, name, version } from './constants'
+import main from './core'
 
-async function main() {
-  const result: prompts.Answers<
-  'platform' | 'action'
-> = await prompts(
-  [
-    {
-      type: 'select',
-      message: reset('请选择发布平台'),
-      name: 'platform',
-      choices: [
-        { title: green('微信'), description: '登录微信公众平台', value: PLATFORM.WEIXIN },
-        { title: blue('支付宝'), description: '登录支付宝公众平台', value: PLATFORM.ALIPAY },
-      ],
-      initial: 0,
-    },
-    {
-      type: 'select',
-      message: reset('您是提交审核还是发布？'),
-      name: 'action',
-      choices: [
-        { title: '提审', description: '提审小程序', value: ACTION.REVIEW },
-        { title: red('发布'), description: '发布小程序', value: ACTION.RELEASE },
-      ],
-      initial: 0,
-    },
-  ],
-  {
-    onCancel: () => {
-      throw new Error(`${red('✖')} Operation cancelled`)
-    },
-  },
-)
+program.name(name).version(version).description(description)
+  .addOption(new Option('-p, --platform <platform>', '操作的平台').choices(Object.values(PLATFORM)))
+  .addOption(new Option('-a, --action <action>', '提审或者发布').choices(Object.values(ACTION)))
 
-  if (result.platform === PLATFORM.WEIXIN)
-    await weixinRobot(result.action as ACTION)
-  else
-    console.log(bgGreen('正在开发中...'))
-}
+program.parse()
 
-main().catch((err) => {
+const options = program.opts<InputOptions>()
+
+main(options).catch((err) => {
   console.error(err)
 })

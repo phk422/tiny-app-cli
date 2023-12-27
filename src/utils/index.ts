@@ -46,3 +46,21 @@ export function sleep(ms: number = 500) {
     setTimeout(resolve, ms)
   })
 }
+
+/**
+ * 判断给定的值是否为空
+ * @param value - 待判断的值
+ * @returns 若为空返回true，否则返回false
+ */
+export function isEmpty(value: unknown) {
+  if (value == null)
+    return true
+
+  if (typeof value === 'string' || Array.isArray(value))
+    return value.length === 0
+
+  if (typeof value === 'object')
+    return Object.keys(value).length === 0
+
+  return false
+}
