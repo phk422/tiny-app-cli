@@ -36,7 +36,10 @@
     "build": "unbuild",
     "publish:ci": "npm publish --access public",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prerelease": "cross-env ARG=prerelease esno scripts/release.ts",
+    "patch": "cross-env ARG=patch esno scripts/release.ts",
+    "major": "cross-env ARG=major esno scripts/release.ts"
   },
   "dependencies": {
     "commander": "^11.1.0",
@@ -50,12 +53,14 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.4.6",
+    "@jsdevtools/version-bump-prompt": "^6.1.0",
     "@types/minimist": "^1.2.5",
     "@types/prompts": "^2.4.9",
     "@types/qrcode-terminal": "^0.12.2",
     "@types/upng-js": "^2.1.5",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
+    "esno": "^4.0.0",
     "lint-staged": "^15.2.0",
     "simple-git-hooks": "^2.9.0",
     "typescript": "^5.3.3",

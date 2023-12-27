@@ -106,7 +106,7 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/**/*", "eslint.config.js", "build.config.ts", "puppeteer.config.cjs", "index.js", "types/**/*"],
+  "include": ["src/**/*", "scripts/**/*", "eslint.config.js", "build.config.ts", "puppeteer.config.cjs", "index.js", "types/**/*"],
   "exclude": ["node_modules", "dist"],
   "ts-node": { "esm": true }
 }
