@@ -24,10 +24,12 @@ export async function getLoginScanCode() {
   const imgSelector = '.login_frame.input_login'
   const loginCode = await page.waitForSelector(imgSelector)
   await page.evaluate(() => {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const el = document.querySelector<HTMLImageElement>('.login__type__container__scan__qrcode')
       if (el) {
-        el.onload = resolve
+        if (el.complete)
+          return resolve()
+        el.onload = () => resolve()
         el.onerror = reject
       }
       else {
