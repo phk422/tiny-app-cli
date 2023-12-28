@@ -1,5 +1,5 @@
 # 🚀 tiny-app-cli
-自动提审与发布微信、支付宝小程序
+自动提审与发布微信、支付宝小程序，更好的实现小程序的CI/CD
 
 ## 安装
 With NPM:
@@ -24,7 +24,7 @@ tiny-app-cli
 然后按照提示去做!
 
 ## 命令行参数
-```bash
+```console
 $ tiny-app-cli -h
 Usage: tiny-app-cli [options]
 
