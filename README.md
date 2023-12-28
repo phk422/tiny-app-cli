@@ -31,10 +31,11 @@ Usage: tiny-app-cli [options]
 自动提审与发布微信、支付宝小程序, 更好的实现小程序的CI/CD
 
 Options:
-  -V, --version              output the version number
-  -p, --platform <platform>  操作的平台 (choices: "weixin", "alipay")
-  -a, --action <action>      提审或者发布 (choices: "review", "release")
-  -h, --help                 display help for command
+  -V, --version               output the version number
+  -p, --platform <platform>   操作的平台 (choices: "weixin", "alipay")
+  -a, --action <action>       提审或者发布 (choices: "review", "release")
+  -hl, --headless [headless]  浏览器无头模式 (choices: "false", "new", default: "new")
+  -h, --help                  display help for command
 ```
 
 示例

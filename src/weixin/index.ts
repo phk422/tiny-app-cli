@@ -11,13 +11,14 @@ let browser: Browser
 let page: Page
 
 let spinner: Ora
+let options: InputOptions
 
 /**
  * 获取微信图片二维码
  */
-export async function getLoginScanCode() {
+export async function getLoginScanCode(opts: InputOptions = options) {
   spinner = ora('正在获取登录二维码...').start()
-  browser = await puppeteer.launch({ headless: false })
+  browser = await puppeteer.launch({ headless: __DEV__ ? false : opts.headless })
   page = await browser.newPage()
   await page.setViewport(VIEWPORT)
   await page.goto(WEIXIN_URL)
@@ -150,11 +151,12 @@ export async function toRelease() {
   console.log('正在开发中...')
 }
 
-export default async function weixinRobot(action: ACTION) {
+export default async function weixinRobot(opts: InputOptions) {
+  options = opts
   try {
     await getLoginScanCode()
     await jumpToVersions()
-    if (action === ACTION.REVIEW) {
+    if (options.action === ACTION.REVIEW) {
       await jumpToConfirmPage()
       await toSubmitAudit()
     }
@@ -164,7 +166,6 @@ export default async function weixinRobot(action: ACTION) {
     process.exit(0)
   }
   catch (err) {
-    console.log(__DEV__)
     if (__DEV__) {
       console.error(err)
       return

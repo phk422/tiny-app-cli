@@ -5,7 +5,7 @@ import weixinRobot from '../weixin'
 import { isEmpty } from '../utils'
 
 export default async function main(options: InputOptions) {
-  let result: prompts.Answers<
+  const result: prompts.Answers<
   'platform' | 'action'
 > = await prompts(
   [
@@ -36,12 +36,12 @@ export default async function main(options: InputOptions) {
     },
   },
 )
-  result = {
+  const opts = {
     ...options,
     ...result,
   }
-  if (result.platform === PLATFORM.WEIXIN)
-    await weixinRobot(result.action as ACTION)
+  if (opts.platform === PLATFORM.WEIXIN)
+    await weixinRobot(opts)
   else
     console.log(bgGreen('正在开发中...'))
 }

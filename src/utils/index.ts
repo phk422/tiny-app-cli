@@ -64,3 +64,16 @@ export function isEmpty(value: unknown) {
 
   return false
 }
+
+export function transBooleanStrToBool(value: string) {
+  if (value === 'true')
+    return true
+  if (value === 'false')
+    return false
+  return value
+}
+
+export function handleOptions(opts: InputOptions) {
+  opts.headless = transBooleanStrToBool(opts.headless as string) as never
+  return opts
+}
