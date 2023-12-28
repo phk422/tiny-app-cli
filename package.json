@@ -37,9 +37,11 @@
     "publish:ci": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prerelease": "cross-env ARG=prerelease esno scripts/release.ts",
-    "patch": "cross-env ARG=patch esno scripts/release.ts",
-    "major": "cross-env ARG=major esno scripts/release.ts"
+    "prerelease": "cross-env VERSION_ARG=prerelease pnpm release",
+    "patch": "cross-env VERSION_ARG=patch pnpm release",
+    "minor": "cross-env VERSION_ARG=minor pnpm release",
+    "major": "cross-env VERSION_ARG=major pnpm release",
+    "release": "esno scripts/release.ts"
   },
   "dependencies": {
     "commander": "^11.1.0",
