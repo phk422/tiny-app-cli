@@ -4,5 +4,6 @@ package-lock.json
 
 cache/*.png
 login-qr.png
+release.png
 
 .eslintcache

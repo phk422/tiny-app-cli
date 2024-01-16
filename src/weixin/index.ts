@@ -147,7 +147,40 @@ export async function toSubmitAudit() {
  * 去发布
  */
 export async function toRelease() {
-  console.log('正在开发中...')
+  const statusEle = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > div.code_version_log_hd > div > div > span > p > span')
+  // 检查审核状态
+  const statusText = await page.evaluate((el) => {
+    return el?.innerHTML
+  }, statusEle)
+  if (statusText !== '审核通过待发布')
+    throw new Error(statusText)
+  const submitBtn = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > div.code_version_log_ft > div > div.weui-desktop-popover__wrp > span > div > button')
+  // 点击提交审核
+  await submitBtn?.click()
+  const submitConfirm = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div:nth-child(9) > div.weui-desktop-dialog__wrp.self-weui-modal > div > div.weui-desktop-dialog__ft > div > div:nth-child(1) > button')
+  await submitConfirm?.click()
+
+  const releaseCodeImagePath = pathResolve('../cache/release.png')
+  const codeEle = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.qrcheck_dialog_simple > div.weui-desktop-dialog__wrp.self-weui-modal > div > div.weui-desktop-dialog__bd > div > div > div > div.weui-desktop-qrcheck__qrcode-area > div > img')
+  await page.evaluate((el) => {
+    return new Promise((resolve, reject) => {
+      if (el) {
+        el.onload = resolve
+        el.onerror = reject
+      }
+      else {
+        reject(new Error('获取发布二维码失败'))
+      }
+    })
+  }, codeEle)
+  await codeEle?.screenshot({ path: releaseCodeImagePath, type: 'png' })
+  spinner.clear()
+  console.clear()
+  spinner.succeed(yellow('请使用微信扫描二维码发布'))
+  console.log(await showQrCodeToTerminal(releaseCodeImagePath))
+  const result = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > p')
+  if (result)
+    spinner.succeed('发布成功')
 }
 
 export default async function weixinRobot(opts: InputOptions) {
