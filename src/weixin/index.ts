@@ -66,7 +66,12 @@ export async function jumpToVersions() {
   }
   spinner.start('正在跳转到版本管理页面...')
   await versionManage.click()
+}
 
+/**
+ * 跳转确认提交审核界面
+ */
+export async function jumpToConfirmPage() {
   const submitReviewBtn = await page.waitForSelector('.mod_default_box.code_version_dev .weui-desktop-btn.weui-desktop-btn_primary')
   if (!submitReviewBtn) {
     spinner.fail('未找到提交审核按钮')
@@ -80,12 +85,6 @@ export async function jumpToVersions() {
   }
   await submitReviewBtn.click()
   await sleep(1200) // 可能会报错
-}
-
-/**
- * 跳转确认提交审核界面
- */
-export async function jumpToConfirmPage() {
   spinner.start('正在提交审核中...')
   const agreeCheckbox = await page.waitForSelector('.weui-desktop-icon-checkbox')
   const nextStepBtn = await page.waitForSelector('.code_submit_dialog .weui-desktop-btn.weui-desktop-btn_primary')
