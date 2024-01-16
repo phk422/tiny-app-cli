@@ -152,8 +152,10 @@ export async function toRelease() {
   const statusText = await page.evaluate((el) => {
     return el?.innerHTML
   }, statusEle)
-  if (statusText !== '审核通过待发布')
+  if (statusText !== '审核通过待发布') {
+    spinner.fail(statusText)
     throw new Error(statusText)
+  }
   const submitBtn = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > div.code_version_log_ft > div > div.weui-desktop-popover__wrp > span > div > button')
   // 点击提交审核
   await submitBtn?.click()
