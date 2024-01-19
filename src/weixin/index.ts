@@ -65,7 +65,8 @@ export async function jumpToVersions() {
     throw new Error('未找到版本管理')
   }
   spinner.start('正在跳转到版本管理页面...')
-  await versionManage.click()
+  const token = new URL(page.url()).searchParams.get('token')
+  await page.goto(`https://mp.weixin.qq.com/wxamp/wacodepage/getcodepage?token=${token}&lang=zh_CN`)
 }
 
 /**
