@@ -1,8 +1,9 @@
-import { bgGreen, blue, green, red, reset } from 'kolorist'
+import { blue, green, red, reset } from 'kolorist'
 import prompts from 'prompts'
 import { ACTION, PLATFORM } from '../constants'
 import weixinRobot from '../weixin'
 import { isEmpty } from '../utils'
+import { alipayRobot } from '../alipay'
 
 export default async function main(options: InputOptions) {
   const result: prompts.Answers<
@@ -43,5 +44,5 @@ export default async function main(options: InputOptions) {
   if (opts.platform === PLATFORM.WEIXIN)
     await weixinRobot(opts)
   else
-    console.log(bgGreen('正在开发中...'))
+    await alipayRobot(opts)
 }
