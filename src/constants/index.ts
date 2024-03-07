@@ -4,6 +4,7 @@ import type { Viewport } from 'puppeteer'
 export { description, version, name } from '../../package.json'
 
 export const WEIXIN_URL = 'https://mp.weixin.qq.com/'
+export const ALIPAY_URL = 'https://auth.alipay.com/login/ant_sso_index.htm?goto=https%3A%2F%2Fopen.alipay.com%2Fdevelop%2Fmanage'
 
 export enum PLATFORM {
   WEIXIN = 'weixin',
