@@ -72,7 +72,7 @@ export async function jumpToVersions() {
 /**
  * 跳转确认提交审核界面
  */
-export async function jumpToConfirmPage() {
+export async function jumpToConfirmPage(opts: InputOptions = options) {
   const submitReviewBtn = await page.waitForSelector('.mod_default_box.code_version_dev .weui-desktop-btn.weui-desktop-btn_primary')
   if (!submitReviewBtn) {
     spinner.fail('未找到提交审核按钮')
@@ -80,7 +80,7 @@ export async function jumpToConfirmPage() {
   }
   // 判断是否有提交审核中的版本
   const testVersion = await page.$('.mod_default_bd.default_box.test_version')
-  if (testVersion && !await testVersion.evaluate(el => el.textContent?.includes('你暂无提交审核的版本或者版本已发布上线'))) {
+  if (!opts.ignoreExisting && testVersion && !await testVersion.evaluate(el => el.textContent?.includes('你暂无提交审核的版本或者版本已发布上线'))) {
     spinner.warn('存在提交审核中的版本')
     throw new Error('存在提交审核中的版本')
   }

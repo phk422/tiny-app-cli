@@ -1,6 +1,6 @@
 import { bgGreen, blue, green, red, reset } from 'kolorist'
 import prompts from 'prompts'
-import { ACTION, PLATFORM } from '../constants'
+import { ACTION, BOOLEAN, PLATFORM } from '../constants'
 import weixinRobot from '../weixin'
 import { isEmpty } from '../utils'
 
@@ -26,6 +26,16 @@ export default async function main(options: InputOptions) {
       choices: [
         { title: '提审', description: '提审小程序', value: ACTION.REVIEW },
         { title: red('发布'), description: '发布小程序', value: ACTION.RELEASE },
+      ],
+      initial: 0,
+    },
+    {
+      type: (_prev, values) => isEmpty(options.ignoreExisting) && values.platform === PLATFORM.WEIXIN && values.action === ACTION.REVIEW ? 'select' : null,
+      message: reset('是否忽略审核中的版本'),
+      name: 'ignoreExisting',
+      choices: [
+        { title: '否', description: '不忽略', value: BOOLEAN.FALSE },
+        { title: red('是'), description: '忽略', value: BOOLEAN.TRUE },
       ],
       initial: 0,
     },

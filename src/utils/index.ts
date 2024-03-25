@@ -75,5 +75,6 @@ export function transBooleanStrToBool(value: string) {
 
 export function handleOptions(opts: InputOptions) {
   opts.headless = transBooleanStrToBool(opts.headless as string) as never
+  opts.ignoreExisting = transBooleanStrToBool(opts.ignoreExisting as string) as never
   return opts
 }
