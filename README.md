@@ -35,7 +35,7 @@ Options:
   -p, --platform <platform>   操作的平台 (choices: "weixin", "alipay")
   -a, --action <action>       提审或者发布 (choices: "review", "release")
   -hl, --headless [headless]  浏览器无头模式 (choices: "false", "new", default: "new")
-  -ie, --ignoreExisting [ignoreExisting]  忽略审核中的版本 (choices: "false", "true", default: "true")
+  -ie, --ignoreExisting [ignoreExisting]  忽略审核中的版本 (choices: "false", "true", default: "false")
   -h, --help                  display help for command
 ```
 
