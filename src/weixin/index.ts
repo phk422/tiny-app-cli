@@ -80,7 +80,7 @@ export async function jumpToConfirmPage(opts: InputOptions = options) {
   }
   // 判断是否有提交审核中的版本
   const testVersion = await page.$('.mod_default_bd.default_box.test_version')
-  if (!opts.ignoreExisting && testVersion && !await testVersion.evaluate(el => el.textContent?.includes('你暂无提交审核的版本或者版本已发布上线'))) {
+  if (!opts.force && testVersion && !await testVersion.evaluate(el => el.textContent?.includes('你暂无提交审核的版本或者版本已发布上线'))) {
     spinner.warn('存在提交审核中的版本')
     throw new Error('存在提交审核中的版本')
   }

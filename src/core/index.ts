@@ -30,12 +30,12 @@ export default async function main(options: InputOptions) {
       initial: 0,
     },
     {
-      type: (_prev, values) => isEmpty(options.ignoreExisting) && values.platform === PLATFORM.WEIXIN && values.action === ACTION.REVIEW ? 'select' : null,
-      message: reset('是否忽略审核中的版本'),
-      name: 'ignoreExisting',
+      type: isEmpty(options.force) ? 'select' : null,
+      message: reset('是否开启强制提交模式'),
+      name: 'force',
       choices: [
-        { title: '否', description: '不忽略', value: BOOLEAN.FALSE },
-        { title: red('是'), description: '忽略', value: BOOLEAN.TRUE },
+        { title: '否', description: '不强制提交', value: BOOLEAN.FALSE },
+        { title: red('是'), description: '强制提交', value: BOOLEAN.TRUE },
       ],
       initial: 0,
     },

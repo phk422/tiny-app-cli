@@ -6,6 +6,6 @@ declare global {
     platform: PLATFORM
     action: ACTION
     headless: PuppeteerLaunchOptions['headless']
-    ignoreExisting: PuppeteerLaunchOptions['ignoreExisting']
+    force: PuppeteerLaunchOptions['force']
   }
 }
