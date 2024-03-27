@@ -4,8 +4,9 @@ import type { Browser, Page } from 'puppeteer'
 import puppeteer from 'puppeteer'
 import type { Ora } from 'ora'
 import ora from 'ora'
+import prompts from 'prompts'
 import { ACTION, VIEWPORT, WEIXIN_URL, __DEV__ } from '../constants'
-import { pathResolve, showQrCodeToTerminal, sleep } from '../utils'
+import { onCancel, pathResolve, showQrCodeToTerminal, sleep } from '../utils'
 
 let browser: Browser
 let page: Page
@@ -73,18 +74,47 @@ export async function jumpToVersions() {
  * 跳转确认提交审核界面
  */
 export async function jumpToConfirmPage() {
-  const submitReviewBtn = await page.waitForSelector('.mod_default_box.code_version_dev .weui-desktop-btn.weui-desktop-btn_primary')
+  const submitReviewBtnSelector = '.mod_default_box.code_version_dev .weui-desktop-btn.weui-desktop-btn_primary'
+  let submitReviewBtn = await page.waitForSelector(submitReviewBtnSelector)
   if (!submitReviewBtn) {
     spinner.fail('未找到提交审核按钮')
     throw new Error('未找到提交审核按钮')
   }
+  const isSubmitReviewBtnDisabled = await submitReviewBtn.evaluate(btn => btn.classList.contains('weui-desktop-btn_disabled'))
   // 判断是否有提交审核中的版本
   const testVersion = await page.$('.mod_default_bd.default_box.test_version')
   if (testVersion && !await testVersion.evaluate(el => el.textContent?.includes('你暂无提交审核的版本或者版本已发布上线'))) {
-    spinner.warn('存在提交审核中的版本')
-    throw new Error('存在提交审核中的版本')
+    if (!options.forceSubmit) {
+      spinner.stop()
+      const result: prompts.Answers<'forceSubmit'> = await prompts([
+        {
+          type: 'confirm',
+          name: 'forceSubmit',
+          message: '当前已存在版本，是否继续强制提交审核？',
+          initial: false,
+        },
+      ], {
+        onCancel,
+      })
+      if (!result.forceSubmit)
+        throw new Error('退出提审')
+      else
+        spinner.start()
+    }
   }
-  await submitReviewBtn.click()
+  if (isSubmitReviewBtnDisabled) {
+    // 撤回
+    await page.evaluate(() => {
+      const el: HTMLButtonElement | null = document.querySelector('.mod_default_bd.default_box.test_version .weui-desktop-dropdown__list-ele__text')
+      el!.click()
+    })
+    await sleep()
+    const confirm = await page.$('body > div:nth-child(9) > div.weui-desktop-dialog__wrp.self-weui-modal > div > div.weui-desktop-dialog__ft > div > div:nth-child(2) > button')
+    await confirm?.click()
+    await sleep(2000)
+    submitReviewBtn = await page.waitForSelector(submitReviewBtnSelector)
+  }
+  await submitReviewBtn!.click()
   await sleep(1200) // 可能会报错
   spinner.start('正在提交审核中...')
   const agreeCheckbox = await page.waitForSelector('.weui-desktop-icon-checkbox')

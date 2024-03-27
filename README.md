@@ -34,6 +34,7 @@ Options:
   -V, --version               output the version number
   -p, --platform <platform>   操作的平台 (choices: "weixin", "alipay")
   -a, --action <action>       提审或者发布 (choices: "review", "release")
+  -f, --force-submit          如果存在【审核中】或【审核通过】的版本，这将强制提交新的审核版本 (choices: "true", "false")
   -hl, --headless [headless]  浏览器无头模式 (choices: "false", "new", default: "new")
   -h, --help                  display help for command
 ```

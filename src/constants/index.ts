@@ -15,6 +15,11 @@ export enum ACTION {
   RELEASE = 'release',
 }
 
+export enum BOOL {
+  TRUE = 'true',
+  FALSE = 'false',
+}
+
 export const VIEWPORT: Viewport = { width: 1920, height: 1080, deviceScaleFactor: 1.5 }
 
 export const __DEV__ = process.env.NODE_ENV === 'development'
