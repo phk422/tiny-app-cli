@@ -2,7 +2,7 @@ import { bgGreen, blue, green, red, reset } from 'kolorist'
 import prompts from 'prompts'
 import { ACTION, PLATFORM } from '../constants'
 import weixinRobot from '../weixin'
-import { isEmpty } from '../utils'
+import { isEmpty, onCancel } from '../utils'
 
 export default async function main(options: InputOptions) {
   const result: prompts.Answers<
@@ -31,9 +31,7 @@ export default async function main(options: InputOptions) {
     },
   ],
   {
-    onCancel: () => {
-      throw new Error(`${red('✖')} Operation cancelled`)
-    },
+    onCancel,
   },
 )
   const opts = {

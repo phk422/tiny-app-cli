@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import qrcodeTerminal from 'qrcode-terminal'
 import jsqr from 'jsqr'
 import UPNG from 'upng-js'
+import { red } from 'kolorist'
 
 export const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -75,5 +76,10 @@ export function transBooleanStrToBool(value: string) {
 
 export function handleOptions(opts: InputOptions) {
   opts.headless = transBooleanStrToBool(opts.headless as string) as never
+  opts.forceSubmit = transBooleanStrToBool(opts.forceSubmit as string) as never
   return opts
+}
+
+export function onCancel() {
+  throw new Error(`${red('✖')} Operation cancelled`)
 }
