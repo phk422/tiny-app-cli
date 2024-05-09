@@ -18,8 +18,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install pnpm
+      - name: Install specific version of pnpm
         uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.12
 
       - name: Use Node.js v18
         uses: actions/setup-node@v3
