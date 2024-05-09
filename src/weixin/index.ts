@@ -121,7 +121,9 @@ export async function jumpToConfirmPage() {
   const nextStepBtn = await page.waitForSelector('.code_submit_dialog .weui-desktop-btn.weui-desktop-btn_primary')
   if (!agreeCheckbox || !nextStepBtn)
     throw new Error('未找阅读并了解平台审核规则')
+  await sleep(1000)
   await agreeCheckbox.click()
+  await sleep(1000)
   await nextStepBtn.click()
 
   // 代码审核进行安全测试提醒, 操作继续提交
