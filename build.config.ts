@@ -8,6 +8,7 @@ export default defineBuildConfig({
     esbuild: {
       target: 'node18',
       minify: true,
+      sourcemap: true,
     },
   },
   alias: {

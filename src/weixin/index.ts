@@ -117,8 +117,8 @@ export async function jumpToConfirmPage() {
   await submitReviewBtn!.click()
   await sleep(1200) // 可能会报错
   spinner.start('正在提交审核中...')
-  const agreeCheckbox = await page.waitForSelector('.weui-desktop-icon-checkbox')
-  const nextStepBtn = await page.waitForSelector('.code_submit_dialog .weui-desktop-btn.weui-desktop-btn_primary')
+  const agreeCheckbox = await page.waitForSelector('.weui-desktop-icon-checkbox', { visible: true })
+  const nextStepBtn = await page.waitForSelector('.code_submit_dialog .weui-desktop-btn.weui-desktop-btn_primary', { visible: true })
   if (!agreeCheckbox || !nextStepBtn)
     throw new Error('未找阅读并了解平台审核规则')
   await agreeCheckbox.click()
