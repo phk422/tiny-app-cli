@@ -1,7 +1,7 @@
 {
   "name": "tiny-app-cli",
   "type": "module",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "packageManager": "pnpm@8.6.12",
   "description": "自动提审与发布微信、支付宝小程序, 更好的实现小程序的CI/CD",
   "author": "penghongkun <https://github.com/phk422>",
