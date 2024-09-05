@@ -17,7 +17,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8.6.12
-      - run: pnpm i
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm run lint
   test:
     runs-on: ubuntu-latest
@@ -29,6 +29,6 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8.6.12
-      - run: pnpm i
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm run build
       # - run: pnpm test
