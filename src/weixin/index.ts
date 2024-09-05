@@ -177,7 +177,7 @@ export async function toSubmitAudit() {
  * 去发布
  */
 export async function toRelease() {
-  const statusEle = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > div.code_version_log_hd > div > div > span > p > span')
+  const statusEle = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(4) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > div.code_version_log_hd > div > p:nth-child(3) > span')
   // 检查审核状态
   const statusText = await page.evaluate((el) => {
     return el?.innerHTML
@@ -186,14 +186,15 @@ export async function toRelease() {
     spinner.fail(statusText)
     throw new Error(statusText)
   }
-  const submitBtn = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > div.code_version_log_ft > div > div.weui-desktop-popover__wrp > span > div > button')
+  console.log(statusText)
+  const submitBtn = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(4) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > div.code_version_log_ft > div > div.weui-desktop-popover__wrp > span > div > button')
   // 点击提交审核
   await submitBtn?.click()
-  const submitConfirm = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div:nth-child(9) > div.weui-desktop-dialog__wrp.self-weui-modal > div > div.weui-desktop-dialog__ft > div > div:nth-child(1) > button')
+  const submitConfirm = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(4) > div:nth-child(9) > div.weui-desktop-dialog__wrp.self-weui-modal > div > div.weui-desktop-dialog__ft > div > div:nth-child(1) > button')
   await submitConfirm?.click()
 
   const releaseCodeImagePath = pathResolve('../cache/release.png')
-  const codeEle = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.qrcheck_dialog_simple > div.weui-desktop-dialog__wrp.self-weui-modal > div > div.weui-desktop-dialog__bd > div > div > div > div.weui-desktop-qrcheck__qrcode-area > div > img')
+  const codeEle = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(4) > div.qrcheck_dialog_simple > div.weui-desktop-dialog__wrp.self-weui-modal > div > div.weui-desktop-dialog__bd > div > div > div > div.weui-desktop-qrcheck__qrcode-area > div > img')
   await page.evaluate((el) => {
     return new Promise((resolve, reject) => {
       if (el) {
@@ -210,7 +211,7 @@ export async function toRelease() {
   console.clear()
   spinner.succeed(yellow('请使用微信扫描二维码发布'))
   console.log(await showQrCodeToTerminal(releaseCodeImagePath))
-  const result = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(2) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > p')
+  const result = await page.waitForSelector('#js_container_box > div.col_main > div > div:nth-child(4) > div.main_bd > span > div.code_mod.mod_default_box.code_version_test > div.mod_default_bd.default_box.test_version > div > div > p')
   if (result)
     spinner.succeed('发布成功')
 }
