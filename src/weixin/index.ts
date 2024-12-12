@@ -70,12 +70,26 @@ export async function jumpToVersions() {
   await page.goto(`https://mp.weixin.qq.com/wxamp/wacodepage/getcodepage?token=${token}&lang=zh_CN`)
 }
 
+async function getSubmitReviewButton() {
+  const submitReviewBtnSelector = '.mod_default_box.code_version_dev .code_version_log .weui-desktop-btn.weui-desktop-btn_primary'
+  let submitReviewBtn = await page.waitForSelector(submitReviewBtnSelector)
+  const codeVersions = await page.$$('.mod_default_box.code_version_dev .code_version_log')
+  // 优先选择体验版进行提交审核
+  if (codeVersions.length > 1) {
+    for await (const item of codeVersions) {
+      const hasExpVersionTag = await item.evaluate(el => el.querySelector('.js_show_exp_version') !== null)
+      if (hasExpVersionTag)
+        submitReviewBtn = await item.$('.weui-desktop-btn.weui-desktop-btn_primary')
+    }
+  }
+  return submitReviewBtn
+}
+
 /**
  * 跳转确认提交审核界面
  */
 export async function jumpToConfirmPage() {
-  const submitReviewBtnSelector = '.mod_default_box.code_version_dev .weui-desktop-btn.weui-desktop-btn_primary'
-  let submitReviewBtn = await page.waitForSelector(submitReviewBtnSelector)
+  let submitReviewBtn = await getSubmitReviewButton()
   if (!submitReviewBtn) {
     spinner.fail('未找到提交审核按钮')
     throw new Error('未找到提交审核按钮')
@@ -112,7 +126,7 @@ export async function jumpToConfirmPage() {
     const confirm = await page.$('body > div:nth-child(9) > div.weui-desktop-dialog__wrp.self-weui-modal > div > div.weui-desktop-dialog__ft > div > div:nth-child(2) > button')
     await confirm?.click()
     await sleep(2000)
-    submitReviewBtn = await page.waitForSelector(submitReviewBtnSelector)
+    submitReviewBtn = await getSubmitReviewButton()
   }
   await submitReviewBtn!.click()
   spinner.start('正在提交审核中...')
