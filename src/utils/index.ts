@@ -24,7 +24,7 @@ export function pathResolve(...paths: string[]) {
  */
 export async function showQrCodeToTerminal(targetPath: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    const data = UPNG.decode(fs.readFileSync(targetPath))
+    const data = UPNG.decode(fs.readFileSync(targetPath) as never)
     const code = jsqr(new Uint8ClampedArray(UPNG.toRGBA8(data)[0]), data.width, data.height)
     if (code) {
       qrcodeTerminal.generate(code.data, { small: true }, (qrcode) => {
