@@ -37,7 +37,7 @@
     "publish:ci": "npm publish --access public",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prerelease": "cross-env VERSION_ARG=prerelease pnpm release",
+    "pre-release": "cross-env VERSION_ARG=prerelease pnpm release",
     "patch": "cross-env VERSION_ARG=patch pnpm release",
     "minor": "cross-env VERSION_ARG=minor pnpm release",
     "major": "cross-env VERSION_ARG=major pnpm release",
