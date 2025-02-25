@@ -76,7 +76,6 @@ export function transBooleanStrToBool(value: string) {
 
 export function handleOptions(opts: InputOptions) {
   opts.headless = transBooleanStrToBool(opts.headless as string) as never
-  opts.forceSubmit = transBooleanStrToBool(opts.forceSubmit as string) as never
   return opts
 }
 
